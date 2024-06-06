@@ -1,0 +1,8 @@
+projects:
+  lrt:
+    schema: schema.graphql
+    include:
+      - schema-base.graphql
+      - types.graphql
+include:
+  - types.graphql

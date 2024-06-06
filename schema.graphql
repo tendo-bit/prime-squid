@@ -1,0 +1,99 @@
+type LRTDeposit @entity {
+  id: ID! @index
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  referralId: String! @index
+  depositor: String! @index
+  asset: String!
+  depositAmount: BigInt!
+  amountReceived: BigInt!
+}
+
+type LRTBalanceData @entity {
+  id: ID! @index
+  recipient: LRTPointRecipient! @index
+  referralId: String @index
+  pointsDate: DateTime!
+  points: BigInt!
+  referralPointsBase: BigInt!
+  asset: String
+  source: String
+  balance: BigInt!
+  balanceDate: DateTime!
+}
+
+type LRTPointRecipient @entity {
+  id: ID! @index
+  balance: BigInt!
+  points: BigInt!
+  pointsDate: DateTime! @index
+  referralPoints: BigInt!
+  elPoints: BigInt!
+  balanceDatas: [LRTBalanceData]! @derivedFrom(field: "recipient")
+  referralCount: Int!
+  referrerCount: Int!
+}
+
+type LRTPointRecipientHistory @entity {
+  id: ID! @index
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  recipient: String!
+  balance: BigInt!
+  points: BigInt!
+  pointsDate: DateTime! @index
+  referralPoints: BigInt!
+  elPoints: BigInt!
+  referralCount: Int!
+  referrerCount: Int!
+}
+
+type LRTSummary @entity {
+  id: ID! @index
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  balance: BigInt!
+  points: BigInt!
+  elPoints: BigInt!
+}
+
+type LRTNodeDelegator @entity {
+  id: ID! @index
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  node: String! @index
+  amount: BigInt!
+  points: BigInt!
+  holdings: [LRTNodeDelegatorHoldings]! @derivedFrom(field: "delegator")
+}
+
+type LRTNodeDelegatorHoldings @entity {
+  id: ID! @index
+  delegator: LRTNodeDelegator! @index
+  asset: String! @index
+  amount: BigInt!
+}
+
+type LRTCampaign @entity {
+  id: ID! @index # campaign
+  campaign: String! @index
+  balance: BigInt!
+  elPoints: BigInt!
+}
+
+type LRTCampaignHistory @entity {
+  id: ID! @index # block:campaign
+  timestamp: DateTime! @index
+  blockNumber: Int! @index
+  campaign: String! @index
+  balance: BigInt!
+  elPoints: BigInt!
+}
+
+type LRTCampaignRecipient @entity {
+  id: ID! @index # campaign:recipient
+  campaign: String! @index
+  recipient: String! @index
+  balance: BigInt!
+  elPoints: BigInt!
+}
